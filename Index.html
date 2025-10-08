@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Your Premium Cleaning Services</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- Color Variables --- */
+        :root {
+            --primary: #007bff; /* Blue color for links/headers/buttons */
+            --accent: #28a745;
+            --dark-text: #212529;
+            --light-bg: #f8f9fa;
+            --white: #FFFFFF;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --radius: 10px; 
+        }
+
+        /* --- Base Styles --- */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-text);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-weight: 800;
+            color: var(--dark-text);
+        }
+
+        /* --- Header & Navigation --- */
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            padding: 10px 20px; 
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; 
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-logo {
+            height: 60px; 
+            width: auto;
+            max-width: 200px; 
+            display: block; 
+            min-width: 150px; 
+            margin-right: 15px; 
+        }
+        
+        /* --- Social Icons Container (Desktop/Mobile) --- */
+        .social-icons-desktop {
+            display: none; 
+        }
+
+        .social-icons-mobile {
+            display: flex; 
+            align-items: center;
+            gap: 12px;
+        }
+
+        .social-link {
+            font-size: 22px; 
+            color: var(--primary); /* All icons now use the --primary blue color */
+            transition: color 0.3s, transform 0.2s;
+        }
+        
+        /* Override for specific brand colors */
+        .social-link.fa-whatsapp { color: #25D366; } /* WhatsApp remains green */
+        .social-link.fa-youtube { color: #FF0000; } /* YouTube remains red */
+        
+        /* Facebook and Instagram icons will now use the general social-link color: --primary (blue) */
+        .social-link.fa-facebook-f { color: var(--primary); } 
+        .social-link.fa-instagram { color: var(--primary); }
+
+
+        .social-link:hover {
+            opacity: 0.8;
+            transform: scale(1.1);
+        }
+        
+        /* The Wrapper to Group the Social Icons and Menu Toggle on MOBILE */
+        .header-right-group {
+            display: flex;
+            align-items: center;
+            gap: 15px; 
+        }
+
+        /* Hamburger Menu Button */
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 24px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 101;
+            position: relative;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: var(--dark-text);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(9px, 9px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Mobile Navigation (Off-canvas menu) */
+        #mobileMenu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 75%;
+            max-width: 320px;
+            height: 100vh;
+            background: var(--white);
+            box-shadow: -2px 0 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            padding-top: 80px;
+            transition: right 0.4s ease-in-out;
+            z-index: 100;
+        }
+
+        #mobileMenu.active {
+            right: 0;
+        }
+        
+        /* This CSS is for the mobile menu links only */
+        #mobileMenu a {
+            color: var(--dark-text);
+            text-decoration: none; 
+            font-weight: 600;
+            font-size: 17px;
+            padding: 20px 30px;
+            transition: background 0.3s, color 0.3s;
+            border-bottom: 1px solid #eee;
+            display: block;
+        }
+        
+        #mobileMenu a:hover,
+        #mobileMenu a:active {
+            color: var(--primary);
+            background: var(--light-bg);
+        }
+        
+        /* Desktop Navigation (Used the same ID, hidden on mobile) */
+        #desktopNav {
+            display: none; 
+            flex-grow: 1; 
+            justify-content: flex-end; 
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Menu Overlay */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 99;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            /* NEW Banner image URL */
+            background-image: url('https://res.cloudinary.com/dbpyjdqt2/image/upload/v1759827967/ChatGPT_Image_Oct_7_2025_02_34_43_PM_hjsaho.png'); 
+            background-size: cover; 
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: var(--white);
+            font-weight: 800;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.7); 
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            font-weight: 400;
+            padding: 0 10px;
+        }
+
+        .hero button {
+            /* Book Now button color changed to --primary blue */
+            background: var(--primary);
+            border: none;
+            color: var(--white);
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4); /* Shadow color updated for blue button */
+            width: 90%;
+            max-width: 320px;
+        }
+
+        .hero button:hover {
+            /* Darker shade of blue for hover */
+            background: #0056b3; 
+            transform: translateY(-2px);
+        }
+
+        /* --- Section Styling --- */
+        section {
+            padding: 50px 15px;
+            margin: auto;
+            text-align: center;
+        }
+
+        section h2 {
+            font-size: 28px;
+            margin-bottom: 30px; 
+            position: relative;
+            display: inline-block;
+            color: var(--primary);
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        /* --- About Section Specific Styles --- */
+        #about {
+            background: var(--light-bg);
+        }
+        
+        #about p {
+            max-width: 800px;
+            margin: 25px auto 0 auto;
+            font-size: 1rem;
+            line-height: 1.7;
+            text-align: justify;
+            padding: 0 10px;
+        }
+
+        /* --- Services Section (Mobile Default - Stacked) --- */
+        .services {
+            display: flex;
+            flex-direction: column; 
+            gap: 20px;
+            padding: 0 10px;
+        }
+
+        .service {
+            background: var(--white);
+            padding: 25px;
+            text-align: center;
+            border-radius: var(--radius);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eee;
+            
+            /* --- ANIMATION SETUP (NEW) --- */
+            opacity: 1;
+            transform: translateY(0);
+            /* Add transitions for animation and box-shadow hover effect */
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease;
+        }
+        
+        /* Initial state for hidden/off-screen cards (NEW) */
+        .service.service-hidden {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        /* --- END ANIMATION SETUP --- */
+
+        .service img {
+            width: 100%;
+            max-height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .service h3 {
+            color: var(--primary);
+            margin: 0 0 10px 0;
+            font-size: 20px;
+        }
+        
+        .service p {
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        
+        /* --- Why Choose Us Specific Styles (Carousels) --- */
+        .why-choose-us {
+            background: var(--light-bg);
+            padding: 50px 15px;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 10px;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            position: relative;
+            width: 100%;
+            min-height: 280px; 
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            opacity: 0;
+            transform: translateX(120%);
+            transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+        }
+
+        .feature-card.active {
+            opacity: 1;
+            transform: translateX(0);
+            z-index: 2;
+        }
+
+        .feature-card.exit {
+            opacity: 0;
+            transform: translateX(-120%);
+            z-index: 1;
+        }
+        
+        .feature-card .icon {
+            font-size: 3.5rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+        
+        .feature-card h4 {
+            color: var(--primary);
+            margin: 0 0 15px 0;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+        
+        .feature-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--dark-text);
+        }
+
+        /* --- Carousel Indicators --- */
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px; 
+            margin-bottom: 50px; 
+        }
+
+        .indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ccc;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .indicator.active {
+            background: var(--accent);
+            transform: scale(1.3);
+        }
+
+        /* --- Testimonials Specific Styles --- */
+        .testimonials {
+            padding-top: 50px;
+            padding-bottom: 50px;
+            background: var(--white);
+        }
+
+        .testimonials-track {
+            position: relative;
+            width: 100%;
+            min-height: 200px;
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            padding: 25px 20px;
+            border-left: 5px solid var(--accent);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            text-align: left;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            opacity: 0;
+            transform: translateX(120%);
+            transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+        }
+
+        .testimonial-card.active {
+            opacity: 1;
+            transform: translateX(0);
+            z-index: 2;
+        }
+
+        .testimonial-card.exit {
+            opacity: 0;
+            transform: translateX(-120%);
+            z-index: 1;
+        }
+        
+        .testimonial-card p {
+            font-style: italic;
+            margin: 0 0 15px 0;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        .testimonial-card strong {
+            display: block;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        /* --- Contact Info Section (NEW GRID DESIGN) --- */
+        .contact-info {
+            background: var(--light-bg); 
+            padding: 50px 15px;
+        }
+
+        .contact-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 30px; 
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-card {
+            background: var(--white); 
+            padding: 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow); 
+            text-align: center;
+            border-top: 5px solid var(--primary); /* Blue border accent */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-card i {
+            font-size: 3rem;
+            color: var(--accent); /* Accent green icon */
+            margin-bottom: 15px;
+        }
+
+        .contact-card h4 {
+            font-size: 1.4rem;
+            color: var(--dark-text);
+            margin: 0 0 10px 0;
+            font-weight: 700;
+        }
+
+        .contact-card p {
+            margin: 3px 0;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .contact-card a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .contact-card a:hover {
+            text-decoration: underline;
+            color: var(--accent);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--dark-text);
+            color: white;
+            text-align: center;
+            padding: 25px 15px;
+            font-size: 13px;
+        }
+        
+        footer p {
+            margin: 5px 0;
+        }
+        
+        footer .service-area {
+            font-weight: 400;
+            opacity: 0.8;
+        }
+        
+        /* --- Anchor Link Header Overlap Fix --- */
+        /* This pushes the section down so the sticky header doesn't cover the heading */
+        #about, 
+        #services, 
+        #why-choose-us, 
+        #testimonials, 
+        #contact {
+            scroll-margin-top: 90px; /* Adjust this value to be slightly more than your header's total height */
+        }
+
+        /* --- Desktop Responsive --- */
+        @media (min-width: 768px) {
+            header {
+                padding: 15px 40px; 
+            }
+
+            .header-logo {
+                height: 70px; 
+                max-width: 250px;
+                margin-right: 40px; 
+            }
+            
+            /* Show desktop social icons and hide mobile ones */
+            .social-icons-desktop {
+                display: flex; 
+                gap: 20px;
+                font-size: 26px; 
+                margin-left: 20px; 
+            }
+            
+            .social-icons-mobile {
+                display: none;
+            }
+
+            .header-right-group {
+                display: none; 
+            }
+
+            .menu-toggle {
+                display: none;
+            }
+
+            /* Show Desktop Navigation */
+            #desktopNav {
+                display: flex; 
+            }
+
+            /* Hide Mobile Navigation (Off-canvas) */
+            #mobileMenu {
+                display: none;
+            }
+            
+            /* Desktop Link Styling */
+            #desktopNav a {
+                color: var(--dark-text);
+                text-decoration: none; 
+                font-weight: 600;
+                font-size: 16px;
+                padding: 5px 10px;
+                transition: color 0.3s;
+                white-space: nowrap; 
+            }
+
+            #desktopNav a:hover {
+                color: var(--primary);
+            }
+
+            /* --- Sections remain the same for desktop --- */
+            section {
+                padding: 70px 40px;
+            }
+
+            /* Services Section to display across two rows on large screens */
+            .services {
+                flex-direction: row;
+                flex-wrap: wrap; /* Allows wrapping onto a new row */
+                gap: 25px;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            .service {
+                /* Display 3 items per row on desktop (33.333% minus gap space) */
+                flex: 1 1 calc(33.333% - 16.666px); 
+                max-width: none; 
+                /* Adds gap between rows of services */
+                margin-bottom: 25px; 
+            }
+            
+            /* Contact Details for Desktop: 3-Column Grid */
+            .contact-grid {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            
+            .contact-card {
+                flex: 1;
+                margin: 0 10px;
+            }
+
+            .carousel-container {
+                max-width: 500px;
+            }
+
+            .carousel-track {
+                min-height: 380px; 
+            }
+
+            .testimonials-track {
+                min-height: 240px; 
+            }
+            
+            .feature-card, .testimonial-card {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            
+            /* Desktop Fix: ensures more space below the header for the heading */
+            #about, 
+            #services, 
+            #why-choose-us, 
+            #testimonials, 
+            #contact {
+                scroll-margin-top: 100px; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <a href="#home">
+                <img src="https://res.cloudinary.com/dbpyjdqt2/image/upload/v1759692860/NNCC_New_png_kxnec7.png" alt="Your Company Logo" class="header-logo">
+            </a>
+
+            <nav id="desktopNav">
+                <a href="#home">Home</a>
+                <a href="#about">About Us</a>
+                <a href="#services">Services</a>
+                <a href="#why-choose-us">Why Us</a> 
+                <a href="#testimonials">Testimonials</a>
+                <a href="#contact">Contact</a>
+            </nav>
+
+            <div class="social-icons-desktop">
+                <a href="https://www.facebook.com/profile.php?id=61580782314071" target="_blank" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/navanirmithi_lccs_pt348/" target="_blank" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/channel/UCn5TQBVqRR2blDjKpks8rrw" target="_blank" class="social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="https://api.whatsapp.com/send/?phone=919495658144&text=Hi&type=phone_number&app_absent=0" target="_blank" class="social-link" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+
+            <div class="header-right-group">
+                <div class="social-icons-mobile">
+                    <a href="https://api.whatsapp.com/send/?phone=919495658144&text=Hi&type=phone_number&app_absent=0" target="_blank" class="social-link" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/navanirmithi_lccs_pt348/" target="_blank" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <nav id="mobileMenu">
+        <a href="#home">Home</a>
+        <a href="#about">About Us</a>
+        <a href="#services">Services</a>
+        <a href="#why-choose-us">Why Choose Us</a> 
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+        <hr style="margin: 20px 0; border-color: #eee;">
+        <h3 style="padding: 0 30px; font-size: 1rem; color: var(--primary);">Connect With Us:</h3>
+        <div style="display: flex; justify-content: center; gap: 25px; padding: 15px 30px;">
+            <a href="https://www.facebook.com/profile.php?id=61580782314071" target="_blank" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f" style="font-size: 24px;"></i></a>
+            <a href="https://www.youtube.com/channel/UCn5TQBVqRR2blDjKpks8rrw" target="_blank" class="social-link" aria-label="YouTube"><i class="fab fa-youtube" style="font-size: 24px;"></i></a>
+        </div>
+    </nav>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <section class="hero" id="home">
+        <h1>Give Your Home<br>Some Shine</h1>
+        <p>We are not a Company<br>We are a community</p>
+        <button onclick="window.location.href='https://api.whatsapp.com/send/?phone=919495658144&text=Hi&type=phone_number&app_absent=0'">BOOK NOW</button>
+    </section>
+    
+    <section id="about">
+        <h2>About Us</h2>
+        <p>Navanirmithi Cleaning Company is a wing of Navanirmithi Labour Contract Co-operative Society Ltd. No. PT 348, offering reliable and professional cleaning services. We combine trained staff, eco-friendly practices, and a commitment to quality to keep your spaces spotless. By choosing us, you support a co-operative that creates sustainable jobs while delivering trusted cleaning solutions.</p>
+    </section>
+
+    <section id="services">
+        <h2>Our Services</h2>
+        <div class="services">
+            <div class="service service-hidden">
+                <img src="https://res.cloudinary.com/dbpyjdqt2/image/upload/v1759823260/Gemini_Generated_Image_x89oymx89oymx89o_xipxco.png" alt="Home and Office Cleaning">
+                <h3>Home/Office Cleaning</h3>
+                <p>Comprehensive deep cleaning for your house, apartment, or commercial office space. Choose from one-time or recurring visits.</p>
+            </div>
+            
+            <div class="service service-hidden">
+                <img src="https://res.cloudinary.com/dbpyjdqt2/image/upload/v1759823260/Gemini_Generated_Image_x89oymx89oymx89o_2_lfuysb.png" alt="Well Cleaning">
+                <h3>Well Cleaning</h3>
+                <p>Expert cleaning and disinfection of wells to ensure your groundwater is free of sediment, debris, and contamination.</p>
+            </div>
+            
+            <div class="service service-hidden">
+                <img src="https://res.cloudinary.com/dbpyjdqt2/image/upload/v1759823260/Gemini_Generated_Image_x89oymx89oymx89o_3_tqswvf.png" alt="Interlock and Paver Cleaning">
+                <h3>Interlock Cleaning</h3>
+                <p>Professional high-pressure washing to remove moss, weeds, and dirt from interlock tiles, restoring their original look.</p>
+            </div>
+
+            <div class="service service-hidden">
+                <img src="https://res.cloudinary.com/dbpyjdqt2/image/upload/v1759823260/Gemini_Generated_Image_x89oymx89oymx89o_5_ymooee.png" alt="Car Wash at Doorstep">
+                <h3>Car Wash@Doorstep</h3>
+                <p>Convenient and thorough car washing service right at your home or office, saving you time and effort.</p>
+            </div>
+            
+            <div class="service service-hidden">
+                <img src="https://res.cloudinary.com/dbpyjdqt2/image/upload/v1759823261/Gemini_Generated_Image_x89oymx89oymx89o_1_wvlx4a.png" alt="Water Tank Cleaning">
+                <h3>Water Tank Cleaning</h3>
+                <p>Professional, sanitized, and eco-friendly cleaning methods to ensure your water storage is safe and clean.</p>
+            </div>
+            
+            <div class="service service-hidden">
+                <img src="https://res.cloudinary.com/dbpyjdqt2/image/upload/v1759823260/Gemini_Generated_Image_x89oymx89oymx89o_4_dp43uh.png" alt="Solar Panel Cleaning">
+                <h3>Solar Panel Cleaning</h3>
+                <p>Remove dust and grime to maximize your energy efficiency and ensure your investment delivers full power.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="why-choose-us" id="why-choose-us">
+        <h2>Why Choose Us ?</h2>
+        
+        <div class="carousel-container">
+            <div class="carousel-track" id="features-track">
+                <div class="feature-card">
+                    <span class="icon">🏆</span>
+                    <h4>Certified Professional Cleaners</h4>
+                    <p>Our team is highly trained, certified, and fully vetted to deliver excellence every time.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="icon">🌎</span>
+                    <h4>Environmentally Friendly Cleaning</h4>
+                    <p>We use non-toxic, eco-friendly products to protect your family's health and the environment.</p>
+                </div>
+
+                <div class="feature-card">
+                    <span class="icon">⭐</span>
+                    <h4>100% Satisfaction Guaranteed</h4>
+                    <p>If you're not completely satisfied with our service, we promise to return and make it right—guaranteed.</p>
+                </div>
+
+                <div class="feature-card">
+                    <span class="icon">🌙</span>
+                    <h4>Available Evenings & Weekends</h4>
+                    <p>We work around your schedule, offering flexible booking times including evenings and weekends for your convenience.</p>
+                </div>
+
+                <div class="feature-card">
+                    <span class="icon">📍</span>
+                    <h4>Serving Every Corner of Pathanamthitta District</h4>
+                    <p>From your town to the farthest villages, we bring professional cleaning to your door.</p>
+                </div>
+            </div>
+            <div class="carousel-indicators" id="features-indicators"></div>
+        </div>
+    </section>
+
+    <section class="testimonials" id="testimonials">
+        <h2>What Our Clients Say</h2>
+        
+        <div class="carousel-container">
+            <div class="testimonials-track" id="testimonials-track">
+                <div class="testimonial-card">
+                    <p>"Amazing service! My home has never looked better. The staff were friendly, professional, and on time. Truly a sparkling result!"</p>
+                    <strong>- Priya R.</strong>
+                </div>
+                <div class="testimonial-card">
+                    <p>"Very professional and thorough. We noticed a huge difference after their tank cleaning service. Highly recommend for reliability."</p>
+                    <strong>- Ramesh K.</strong>
+                </div>
+                <div class="testimonial-card">
+                    <p>"Prompt communication and excellent value. Our solar panels are visibly cleaner, and we've seen an improvement in output."</p>
+                    <strong>- Anjali S.</strong>
+                </div>
+                <div class="testimonial-card">
+                    <p>"The best deep cleaning we've ever had. They paid attention to every detail and left no corner untouched. Fantastic team!"</p>
+                    <strong>- Vishal M.</strong>
+                </div>
+            </div>
+            <div class="carousel-indicators" id="testimonials-indicators"></div>
+        </div>
+    </section>
+    
+    <section class="contact-info" id="contact">
+        <h2>Contact Us</h2>
+        <div class="contact-grid">
+            <div class="contact-card address-card">
+                <i class="fas fa-map-marker-alt"></i>
+                <h4>Head Office</h4>
+                <p>Kottarathil Towers</p>
+                <p>Mylapra P.O</p>
+                <p>Pathanamthitta</p>
+            </div>
+            <div class="contact-card phone-card">
+                <i class="fas fa-phone"></i>
+                <h4>Call Us Anytime</h4>
+                <p><a href="tel:9495658144">9495658144</a></p>
+                <p><a href="tel:9495975921">9495975921</a></p>
+                <p><a href="tel:9961320083">9961320083</a></p>
+            </div>
+            <div class="contact-card email-card">
+                <i class="fas fa-envelope"></i>
+                <h4>Email / Website</h4>
+                <p><a href="mailto:nlccs348@gmail.com">nlccs348@gmail.com</a></p>
+                <p><a href="http://www.navanirmithi.co.in" target="_blank">www.navanirmithi.co.in</a></p>
+            </div>
+        </div>
+    </section>
+
+
+    <footer>
+        <p>Site designed, developed, and maintained by &copy; Navanirmithi Technologies. All Rights Reserved</p>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menuLinks = mobileMenu.querySelectorAll('a');
+
+        function toggleMenu() {
+            menuToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        menuToggle.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking a link
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 768) {
+                    // Check if the link is NOT part of the social icons in the mobile menu
+                    if (!link.closest('.social-icons-mobile')) {
+                        toggleMenu();
+                    }
+                }
+            });
+        });
+
+        // Carousel Function
+        function initCarousel(trackId, indicatorsId, interval = 3000) {
+            const track = document.getElementById(trackId);
+            const cards = track.querySelectorAll('.feature-card, .testimonial-card');
+            const indicatorsContainer = document.getElementById(indicatorsId);
+            let currentIndex = 0;
+            let autoPlayInterval;
+
+            if (cards.length === 0) return;
+
+            // Create indicators
+            cards.forEach((_, index) => {
+                const indicator = document.createElement('div');
+                indicator.className = 'indicator';
+                if (index === 0) indicator.classList.add('active');
+                indicator.addEventListener('click', () => goToSlide(index));
+                indicatorsContainer.appendChild(indicator);
+            });
+
+            const indicators = indicatorsContainer.querySelectorAll('.indicator');
+
+            function goToSlide(index) {
+                cards.forEach(card => {
+                    card.classList.remove('active', 'exit');
+                });
+
+                indicators.forEach(ind => ind.classList.remove('active'));
+
+                if (currentIndex !== index) {
+                    cards[currentIndex].classList.add('exit');
+                }
+
+                currentIndex = index;
+
+                cards[currentIndex].classList.add('active');
+                indicators[currentIndex].classList.add('active');
+
+                clearInterval(autoPlayInterval);
+                startAutoPlay();
+            }
+
+            function nextSlide() {
+                const nextIndex = (currentIndex + 1) % cards.length;
+                goToSlide(nextIndex);
+            }
+
+            function startAutoPlay() {
+                autoPlayInterval = setInterval(nextSlide, interval);
+            }
+
+            // Initialize
+            cards[0].classList.add('active');
+            startAutoPlay();
+
+            // Pause on hover
+            track.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
+            track.addEventListener('mouseleave', startAutoPlay);
+        }
+        
+        // --- NEW: Animate on Scroll (AoS) for Service Cards ---
+        function initServiceCardAnimations() {
+            const serviceCards = document.querySelectorAll('.service');
+            
+            // Intersection Observer Setup
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // Calculate a staggered delay based on the card's position (index in the NodeList)
+                        const cardIndex = Array.from(serviceCards).indexOf(entry.target);
+                        entry.target.style.transitionDelay = `${cardIndex * 150}ms`; // 150ms delay per card
+                        
+                        // Remove the hidden class to trigger the CSS fade-up transition
+                        entry.target.classList.remove('service-hidden');
+                        
+                        // Stop observing once the animation has run
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of the element is visible
+            });
+
+            serviceCards.forEach(card => {
+                // Attach the observer to each card
+                observer.observe(card);
+            });
+        }
+        // --- END NEW FUNCTION ---
+
+        // Initialize both carousels and the service card animations when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            initCarousel('features-track', 'features-indicators', 3000);
+            initCarousel('testimonials-track', 'testimonials-indicators', 3000);
+            initServiceCardAnimations(); // Call the new animation function
+        });
+    </script>
+
+</body>
+</html>
